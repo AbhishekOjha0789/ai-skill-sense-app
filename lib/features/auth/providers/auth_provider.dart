@@ -55,9 +55,17 @@ class AuthProvider extends ChangeNotifier {
   Future<void> checkAuthStatus() async {
     _isLoading = true;
     notifyListeners();
-    _currentUser = await _authRepository.fetchProfile();
-    _isLoading = false;
-    notifyListeners();
+
+    try {
+      // Safely fetch profile; handles connection drops or cold starts
+      _currentUser = await _authRepository.fetchProfile();
+    } catch (e) {
+      debugPrint('Auth status check failed: $e');
+      _currentUser = null;
+    } finally {
+      _isLoading = false;
+      notifyListeners();
+    }
   }
 
   Future<void> logout() async {
