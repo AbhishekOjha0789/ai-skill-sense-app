@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:ai_skill_sense/features/settings/screens/settings_screen.dart';
+import 'package:ai_skill_sense/features/auth/screens/profile_screen.dart';
 import 'package:ai_skill_sense/features/auth/providers/auth_provider.dart';
 import 'package:ai_skill_sense/features/auth/screens/login_screen.dart';
 import 'package:ai_skill_sense/features/shared/models/attribute_type.dart';
@@ -73,6 +75,25 @@ class _DashboardScreenState extends State<DashboardScreen> {
       appBar: AppBar(
         title: const Text('AI Skill Sense - Dashboard'),
         actions: [
+          // Settings & Integrations Button (for Webhook Bridge URL, etc.)
+          IconButton(
+            icon: const Icon(Icons.settings),
+            onPressed: () => Navigator.push(
+              context,
+              MaterialPageRoute(builder: (_) => const SettingsScreen()),
+            ),
+            tooltip: 'Settings & Integrations',
+          ),
+          // User Profile Button (Account metadata & Logout)
+          IconButton(
+            icon: const Icon(Icons.person),
+            onPressed: () => Navigator.push(
+              context,
+              MaterialPageRoute(builder: (_) => const ProfileScreen()),
+            ),
+            tooltip: 'Profile',
+          ),
+          // Existing Logout Shortcut Button
           IconButton(
             icon: const Icon(Icons.logout),
             onPressed: () => _logout(context),
